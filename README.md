@@ -32,7 +32,7 @@ Step 3:	Add the method level annotation like for retrieving methods
 Securing REST end-points
 
 Step 1: Add "<security-domain>training</security-domain>" tag in jboss-web.xml file
-Step 2: Update the web.xml with security tags
+Step 2: Update the web.xml with security tags [web.xml way]
 
 		<security-constraint>
 			<web-resource-collection>
@@ -56,20 +56,28 @@ Step 2: Update the web.xml with security tags
 		<security-role>
 			<role-name>user</role-name>
 		</security-role>
-Step 3: Add @RolesAllowed("user") annotation on all GET methods and @RolesAllowed("admin") for all PUT and 		DELETE methods
+		
+		OR
+		
+		[Annotation way]
+		Add @RolesAllowed("user") annotation on all GET methods and 
+		@RolesAllowed("admin") for all PUT and DELETE methods
+		
 Step 4: Create a security-domain tag in Wildfly/standalone/standalone.xml file
-		<security-domain name="training" cache-type="default">
-            <authentication>
-                <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
-                    <module-option name="dsJndiName" value="java:jboss/datasources/ExampleDS"/>
-                    <module-option name="principalsQuery" value="select password from Principals username where username=?"/>
-                    <module-option name="rolesQuery" value="select Role, RoleGroup as Roles from UserRoles where username=?"/>
-                    <module-option name="hashEncoding" value="base64"/>
-                    <module-option name="hashUserPassword" value="false"/>
-                </login-module>
-            </authentication>
-        </security-domain>
-Step 5: Update the ExampleDS datasource's copnnection url with the one below
+	<security-domain name="training" cache-type="default">
+        <authentication>
+            <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
+                <module-option name="dsJndiName" value="java:jboss/datasources/ExampleDS"/>
+                <module-option name="principalsQuery" value="select passwd from Users username where username=?"/>
+                <module-option name="rolesQuery" value="select userRoles, RoleGroup from UserRoles where username=?"/>
+                <module-option name="hashEncoding" value="base64"/>
+                <module-option name="hashUserPassword" value="false"/>
+            </login-module>
+        </authentication>
+    </security-domain>
+    
+Step 5: Update the ExampleDS datasource's copnnection url with the one below. Note the location of the 		craete.sql file.
+
 		<connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;;INIT=RUNSCRIPT FROM 'c:/users/prasengupta/create.sql'</connection-url>
 		
 Step 6: Create the SQL tables
