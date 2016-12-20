@@ -2,7 +2,10 @@ package com.prapps.tutorial.ejb.persistence.dao;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
+import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -19,9 +22,13 @@ import com.prapps.tutorial.ejb.rest.model.Book;
 
 @Singleton
 public class LibraryDao {
+	private static Logger LOG = Logger.getLogger(LibraryDao.class.getName());
 
 	@Inject
 	private BookMapper bookMapper;
+	
+	@Resource  
+    private EJBContext context;
 	
 	@PersistenceContext(name = "persistenceUnit")
 	private EntityManager em;
@@ -80,6 +87,7 @@ public class LibraryDao {
 	}
 	
 	public Book addBook(Book book) {
+		LOG.fine("Caller Name: "+context.getCallerPrincipal().getName());
 		BookEntity entity = bookMapper.map(book);
 		entity = em.merge(entity);
 		return bookMapper.map(entity);
