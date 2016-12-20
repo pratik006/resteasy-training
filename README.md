@@ -133,6 +133,7 @@ Download the WildFly client adapter from https://downloads.jboss.org/keycloak/2.
 bin/jboss-cli.sh -c ':shutdown(restart=true)'
 Wait until WildFly has restarted then run:
 bin/jboss-cli.sh -c --file=bin/adapter-install.cli
+jboss-cli.bat -c --file=adapter-install.cli
 Finally run:
 bin/jboss-cli.sh -c ':shutdown(restart=true)'
 		
@@ -143,14 +144,13 @@ Step 7: KEYCLOAK token generation
 
 Token generation for testuser1 which has admin privileges
 RESULT=`curl --data "grant_type=password&client_id=curl&username=testuser1&password=password1" http://localhost:8180/auth/realms/master/protocol/openid-connect/token`
-echo $RESULT
 TOKEN=`echo $RESULT | sed 's/.*access_token":"//g' | sed 's/".*//g'`
 echo $TOKEN
+
 curl http://localhost:8080/rest/library/books/123abc -H "Authorization: bearer $TOKEN"
 
 Token generation for testuser2 which has user privileges
 RESULT=`curl --data "grant_type=password&client_id=curl&username=testuser2&password=password2" http://localhost:8180/auth/realms/master/protocol/openid-connect/token`
-echo $RESULT
 TOKEN=`echo $RESULT | sed 's/.*access_token":"//g' | sed 's/".*//g'`
 echo $TOKEN
 
