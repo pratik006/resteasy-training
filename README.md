@@ -128,7 +128,7 @@ Step 3: Now change the auth-method in web.xml file from
 
 Step 4: Keycloak Client Adapter configuration
 
-Download the WildFly client adapter keycloak-wf9-adapter.tar.gz (or keycloak-wf9-adapter.zip). Extract the archive into the root of your WildFly installation and run:
+Download the WildFly client adapter from https://downloads.jboss.org/keycloak/2.4.0.Final/adapters/keycloak-oidc/keycloak-wildfly-adapter-dist-2.4.0.Final.zip. Extract the archive into the root of your WildFly installation and run:
 
 bin/jboss-cli.sh -c ':shutdown(restart=true)'
 Wait until WildFly has restarted then run:
@@ -136,7 +136,8 @@ bin/jboss-cli.sh -c --file=bin/adapter-install.cli
 Finally run:
 bin/jboss-cli.sh -c ':shutdown(restart=true)'
 		
-		
+Client Adapter installation Docs available at:
+https://keycloak.gitbooks.io/securing-client-applications-guide/content/topics/oidc/java/jboss-adapter.html
 
 Step 7: KEYCLOAK token generation
 

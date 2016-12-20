@@ -5,5 +5,7 @@
       http://www.jboss.com/xml/ns/javaee
       http://www.jboss.org/j2ee/schema/jboss-web_5_1.xsd">  
     <security-domain>keycloak</security-domain>
+    <!-- in case of BASIC security uncomment the following -->
+    <!-- <security-domain>training</security-domain> -->
     <context-root>/rest</context-root>
 </jboss-web>  
